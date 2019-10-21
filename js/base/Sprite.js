@@ -1,4 +1,4 @@
-import { DataStore } from "./DataStore.js";
+import { DataStore } from "../base/DataStore.js";
 
 // 各种图片的父类
 
