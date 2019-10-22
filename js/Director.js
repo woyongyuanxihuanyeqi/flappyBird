@@ -1,6 +1,7 @@
 import { DataStore } from "./base/DataStore.js";
 import { UpPipe } from "./runtime/UpPipe.js";
 import { DownPipe } from "./runtime/DownPipe.js";
+import { Tool } from "../extra.js";
 
 
 
@@ -141,8 +142,19 @@ export class Director{
             // 循环运行
             requestAnimationFrame(()=>this.run());
         }else{
+            let t = new Tool();
+            t.zhendong();
             // 游戏结束, 停止循环渲染
             cancelAnimationFrame(this.id);
+
+            // 游戏结束, 重新渲染一次(避免安卓贴图错乱)
+            this.dataStore.get('background').draw();
+            this.dataStore.get('pipes').forEach(p=>{
+              p.draw();
+            });
+            this.dataStore.get('land').draw();
+            this.dataStore.get('birds').draw();
+            this.dataStore.get('Score').draw();
 
             // 画结束的按钮
             this.dataStore.get('startButton').draw();
