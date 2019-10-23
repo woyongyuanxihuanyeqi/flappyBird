@@ -23,6 +23,8 @@ export class Main{
         this.dataStore = DataStore.getInstance();
         // 初始化一个导演
         this.director = Director.getInstance();
+        // 初始化用户授权信息
+        this.user = null;
         // 加载完成后, 执行其他的操作
         this.loader.onloaded(map=>this.onResourceLoaded(map));
     }
@@ -42,9 +44,25 @@ export class Main{
         const t = new Tool();
         // t.playMusic('./audio/bgm.mp3', true);
         // t.voice('./audio/bgm.mp3',true).play();
-        t.getTelInfo();
-        t.getUserInfo();
-        this.init();
+        // t.getTelInfo();
+        // t.send();
+        // t.sendSocket();
+        t.downPic();
+        // 查询用户是否已经授权
+        wx.getUserInfo({
+          success:(result)=>{
+            if(result.userInfo){
+              //曾经授权过， 可以直接获取授权用户信息
+              this.init();
+            }
+          },
+          fail: err=>{
+            // 之前没有授权， 获取用户信息失败
+            t.getUserInfo(()=>{
+              this.init();
+            })
+          }
+        })
 
     }
     // 游戏初始化,初始化游戏中的数据, 将其保存在变量池中

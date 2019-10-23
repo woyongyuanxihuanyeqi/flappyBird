@@ -76,7 +76,7 @@ export class Director{
         // 小鸟越过水管, 没有撞上, 当前可以加分状态, 加分
             // 越过的肯定是第一组水管, 所以只需要判断小鸟和第一组水管的位置关系
             if(birds.birdsX[0]>pipes[0].x+pipes[0].width&& score.canAdd){
-                score.score++;
+                score.score+=10000;
                 // 改变加分状态为不可加分
                 score.canAdd = false;
             }
